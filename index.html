@@ -1,0 +1,528 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#2C2D38" />
+        <title>D&P Invoice</title>
+        <link rel="stylesheet" href="/assets/font.css" />
+        <link rel="manifest" href="/assets/site.webmanifest?v=1.4.1" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/fav/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/fav/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/fav/favicon-16x16.png" />
+
+        <style type="text/css">
+            html, body {
+                padding: 0;
+                margin: 0;
+                font-family: Poppins;
+                background: #F0f0f0;
+            }
+            .a4-container {
+                transform: scale(1.414); /* You can adjust the scaling factor as needed */
+                transform-origin: top left;
+                background: white;
+                width: 595.276px;
+                height: 841.89px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                position: relative;
+                padding: 0 40px;
+                padding-top: 38px;
+            }
+            .subhead {
+                margin-top:12.3px;
+                color: #989898;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: italic;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.1px;
+            }
+            .billed-to {
+                color: #64605F;
+                font-family: Poppins;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                margin-top: 19px;
+                margin-bottom: -5px;
+                display: flex;
+            }
+            .billed-to > div:nth-child(1) {
+                width: 231px;
+            }
+            .billed-to > div:nth-child(2) {
+                width: 150px;
+            }
+            .billed-detail {
+                color: #64605F;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                display: inline-flex;
+                justify-content: space-between;
+            }
+            .billed-detail > div {
+                width: 150px;
+                position: relative;
+            }
+            .billed-detail > div > div {
+                position: relative;
+                z-index: 2;
+            }
+            .billed-detail > div:nth-child(1) {
+                width: 231px;
+            }
+            .billed-detail svg {
+                position: absolute;
+                left: -8px;
+            }
+            .address {
+                color: #64605F;
+                font-family: Poppins;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+                margin-bottom: 88px;
+                margin-top: 3px;
+                white-space: pre-line;
+                width: 40%;
+            }
+            .content {
+                display: flex;
+            }
+            .content .left {
+                color: #898988;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: italic;
+                font-weight: 500;
+                line-height: normal;
+                margin-right: 32px;
+                width: 110px;
+            }
+            .table {
+                width: 100%;
+                position: relative;
+            }
+            .table > div {
+                display: flex;
+                justify-content:space-between;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 3.18px;
+                margin-bottom: 8.82px;
+            }
+            .table > div > div:nth-child(1) {
+                color: #898988;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+            .table > div > div:nth-child(2) {
+                color: #424242;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+            .table > .plus {
+                border: none;
+                text-align: center;
+                display: block;
+                padding: 0;
+                margin: 0;
+                cursor: pointer;
+                position: relative;
+            }
+            .table > .plus:before {
+                content: "+";
+                height: 15px;
+                width: 15px;
+                display: block;
+                background: green;
+                position: absolute;
+                border-radius: 16px;
+                right: calc(50% - 7.5px);
+                top: 1px;
+                z-index: 1;
+                text-align: center;
+                color: white;
+                font-size: 8px;
+                line-height: 16px;
+                cursor: pointer;
+                top: 0px;
+            }
+            .table .minus {
+                position: absolute;
+                right: -20px;
+                display: inline;
+            }
+            .table .minus:before {
+                content: "-";
+                height: 15px;
+                width: 15px;
+                display: block;
+                background: red;
+                position: absolute;
+                border-radius: 16px;
+                right: -7px;
+                top: 1px;
+                z-index: 1;
+                text-align: center;
+                color: white;
+                font-size: 8px;
+                line-height: 16px;
+                cursor: pointer;
+            }
+            .total {
+                color: #5C5B5B;
+                text-align: right;
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin-top: 24.8px;
+            }
+            .total-nominal {
+                color: #D13832;
+                text-align: right;
+                font-family: Poppins;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin-top: 11px;
+            }
+            .name-signature {
+                margin-top: 71px;
+                color: #434342;
+                text-align: right;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+            .position {
+                color: #434342;
+                text-align: right;
+                font-family: Poppins;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+            footer {
+                background: #F6F6F6;
+                position: absolute;
+                bottom: 0;
+                left: 0px;
+                padding: 10px 40px;
+                width: calc(100% - 80px);
+            }
+            footer table {
+                padding: 0;
+                margin: 0;
+                border-spacing:0; /* Removes the cell spacing via CSS */
+                border-collapse: collapse;
+            }
+            footer table td {
+                color: #1D1D1B;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 17px; /* 170% */
+            }
+            footer table td:nth-child(1) {
+                padding-right: 20px;
+            }
+            .payment-detail {
+                color: #3C3C3B;
+                font-family: Poppins;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 17px; /* 212.5% */
+            }
+            .address-from {
+                margin-top: 24px;
+                color: #3C3C3B;
+                font-family: Poppins;
+                font-size: 8px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: 16px; /* 200% */
+            }
+            .detail {
+                width: 80%;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .reset {
+                position: absolute;
+                right: 52px;
+                top: 0;
+                cursor: pointer;
+                font-size: 10px;
+                background: red;
+                border-radius: 8px;
+                padding: 4px 8px;
+                margin: 8px;
+                color: white;
+            }
+
+            .print {
+                position: absolute;
+                right: 5px;
+                top: 0;
+                cursor: pointer;
+                font-size: 10px;
+                background: green;
+                border-radius: 8px;
+                padding: 4px 8px;
+                margin: 8px;
+                color: white;
+            }
+
+            .install {
+                position: absolute;
+                right: 103px;
+                top: 0;
+                cursor: pointer;
+                font-size: 10px;
+                background: blue;
+                border-radius: 8px;
+                padding: 4px 8px;
+                margin: 8px;
+                color: white;
+            }
+
+            @media print {
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+
+                .a4-container {
+                    margin: 0;
+                    box-shadow: none;
+                }
+
+                .plus, .minus, .reset, .install, .print {
+                    display: none !important;
+                }
+            }
+
+            @media screen and (min-width: 801px) {
+                .a4-container {
+                    margin-left: calc(50% - 422px);
+                }
+            }
+
+            .d-none {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="a4-container" id="app">
+            <div class="install" :class="downloadAvailable ? '' : 'd-none'" @click="install">Install</div>
+            <div class="reset" @click="reset">Reset</div>
+            <div class="print" @click="print">Print</div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="36" viewBox="0 0 31 36" fill="none">
+                <path d="M20.97 21.09L19.7 19.18L19.53 18.91L15.46 12.7C15.0657 12.1078 14.8568 11.4115 14.86 10.7C14.86 10.2338 14.9518 9.77218 15.1302 9.34147C15.3086 8.91077 15.5701 8.51942 15.8998 8.18977C16.2294 7.86012 16.6208 7.59863 17.0515 7.42023C17.4822 7.24182 17.9438 7.15 18.41 7.15C18.8762 7.15 19.3378 7.24182 19.7685 7.42023C20.1992 7.59863 20.5906 7.86012 20.9202 8.18977C21.2499 8.51942 21.5114 8.91077 21.6898 9.34147C21.8682 9.77218 21.96 10.2338 21.96 10.7H29.1C29.1 7.86218 27.9727 5.1406 25.966 3.13396C23.9594 1.12732 21.2378 0 18.4 0C15.5622 0 12.8406 1.12732 10.834 3.13396C8.82732 5.1406 7.70001 7.86218 7.70001 10.7C7.69382 12.0086 7.94174 13.3059 8.43001 14.52C8.33644 14.5175 8.24371 14.5381 8.16001 14.58C6.50457 14.9928 4.97199 15.7959 3.69037 16.9222C2.40874 18.0484 1.4153 19.465 0.793058 21.0536C0.17082 22.6422 -0.0621349 24.3567 0.113664 26.0538C0.289463 27.7509 0.868907 29.3812 1.80357 30.8085C2.73824 32.2359 4.00097 33.4188 5.48623 34.2584C6.97149 35.098 8.63615 35.5699 10.3411 35.6346C12.046 35.6994 13.7416 35.3551 15.2863 34.6306C16.831 33.9061 18.1798 32.8223 19.22 31.47L21.98 35.69H30.54L20.97 21.09ZM14.28 24.97C14.2824 25.8166 13.9829 26.6363 13.4354 27.2821C12.888 27.9279 12.1283 28.3574 11.2927 28.4936C10.4571 28.6298 9.60031 28.4637 8.87611 28.0252C8.15191 27.5867 7.60769 26.9044 7.34111 26.1009C7.07453 25.2973 7.10304 24.4251 7.42153 23.6407C7.74002 22.8563 8.32764 22.211 9.07893 21.8207C9.83022 21.4305 10.696 21.3207 11.5209 21.5112C12.3458 21.7016 13.0759 22.1799 13.58 22.86L13.76 23.15C14.0986 23.6968 14.2787 24.3269 14.28 24.97Z" fill="#3B3B3B"/>
+            </svg>
+            <div class="subhead">
+                A Creative<br/>Consulting Stop
+            </div>
+
+            <div class="billed-to">
+                <div>Billed to:</div>
+                <div>Date:</div>
+                <div>Subject:</div>
+            </div>
+
+            <div class="billed-detail">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M6.19999 11.33C9.1271 11.33 11.5 8.95709 11.5 6.02998C11.5 3.10287 9.1271 0.72998 6.19999 0.72998C3.27288 0.72998 0.899994 3.10287 0.899994 6.02998C0.899994 8.95709 3.27288 11.33 6.19999 11.33Z" fill="#FFD004"/>
+                    </svg>
+                    <div contenteditable="true" @input="handleInput($event, 'to')">{{to}}</div>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M6.19999 11.33C9.1271 11.33 11.5 8.95709 11.5 6.02998C11.5 3.10287 9.1271 0.72998 6.19999 0.72998C3.27288 0.72998 0.899994 3.10287 0.899994 6.02998C0.899994 8.95709 3.27288 11.33 6.19999 11.33Z" fill="#FFD004"/>
+                    </svg>
+                    <div contenteditable="true" @input="handleInput($event, 'date')">{{date}}</div>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M6.19999 11.33C9.1271 11.33 11.5 8.95709 11.5 6.02998C11.5 3.10287 9.1271 0.72998 6.19999 0.72998C3.27288 0.72998 0.899994 3.10287 0.899994 6.02998C0.899994 8.95709 3.27288 11.33 6.19999 11.33Z" fill="#FFD004"/>
+                    </svg>
+                    <div contenteditable="true" @input="handleInput($event, 'type')">{{type}}</div>
+                </div>  
+            </div>
+
+            <div contenteditable="true" @input="handleInput($event, 'address')" class="address">{{address}}</div>
+
+            <div class="content">
+                <div contenteditable="true"  @input="handleInput($event, 'main')" class="left" >{{main}}</div>
+
+                
+                <div class="table">
+                    <div v-for="(item, index) in items">
+                        <div contenteditable="true"  @blur="handleItem($event, index, 0)">{{item[0]}}</div>
+                        <div>
+                            Rp <span contenteditable="true"  @blur="handleItem($event, index, 1)">{{item[1] | formatNumber}}</span>
+                            <div class="minus" @click="minus(index)"></div>
+                        </div>
+                    </div>
+                    <div class="plus" @click="plus"></div>
+                </div>
+            </div>
+
+            <div class="total">Total</div>
+
+            <div class="total-nominal">Rp {{total | formatNumber}}</div>
+
+            <div contenteditable="true" @input="handleInput($event, 'signature_name')" class="name-signature">{{signature_name}}</div>
+            <div contenteditable="true" @input="handleInput($event, 'signature_position')" class="position">{{signature_position}}</div>
+
+            <footer>
+                <div class="payment-detail">Payment Details:</div>
+                <div>
+                    <table>
+                        <tr>
+                            <td>Bank Name</td>
+                            <td>:</td>
+                            <td>Bank Tabungan Pensiunan Nasional (BTPN)</td>
+                        </tr>
+                        <tr>
+                            <td>Account No</td>
+                            <td>:</td>
+                            <td>90021483624</td>
+                        </tr>
+                        <tr>
+                            <td>Account Name</td>
+                            <td>:</td>
+                            <td>Devin Hidayat (Cashtag: $devinnpartners)</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="address-from">
+                    Devin & Partners<br/>
+                    Neo Soho Lt 32, Letjen S Parman St. No. 28, South Tanjung Duren, Grogol Petamburan, West Jakarta City, Jakarta 11470
+                    <div class="detail">
+                        <div>phone +62 8817 17 2626</div>
+                        <div>email info@devinpartners.com</div>
+                        <div>website www.devinpartners.com</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+        <script type="module" src="/assets/pwa.js?v=1.4.1"></script>
+        <script src="/assets/sw.js?v=1.4.1"></script>
+        <pwa-install manual-apple="true" manual-chrome="true" id="pwa-install" manifest-url="/assets/site.webmanifest?v=1.4.1"></pwa-install>
+        <script type="text/javascript">
+            var pwaInstall = document.getElementById("pwa-install");
+        </script>
+
+        <script type="text/javascript">
+            new Vue({
+                el: "#app",
+                data: {
+                    to: window.localStorage.getItem("to") || "PT. Selalu Cepat Lunas",
+                    date: window.localStorage.getItem("date") || "July 27th, 2023",
+                    type: window.localStorage.getItem("type") || "Full Payment",
+                    main: window.localStorage.getItem("main") || "Digital Marketing & Strategy Grand Total",
+                    items: JSON.parse(window.localStorage.getItem("items")) || [
+                        ["ITEM", 1000000],
+                        ["ITEM", 2000000],
+                        ["ITEM", 3000000],
+                    ],
+                    signature_name: window.localStorage.getItem("signature_name") || "Devin Hidayat",
+                    signature_position: window.localStorage.getItem("signature_position") || "Managing Director",
+                    address : window.localStorage.getItem("address") || "The H Tower, 18th Floor, unit AB-FG\nJl. H. R. Rasuna Said No.Kav. 20\nJakarta Selatan, DKI Jakarta 12940",
+                    downloadAvailable: false,
+                },
+                mounted() {
+                    pwaInstall.addEventListener("pwa-install-available-event", (event) => {
+                        this.downloadAvailable = pwaInstall.isInstallAvailable;
+                    });
+                },
+                methods: {
+                    handleInput(event, name) {
+                        this[name] = event.target.textContent;
+                        window.localStorage.setItem(name, this[name])
+                    },
+                    handleItem(event, index, item) {
+                        this.items[index][item] = event.target.textContent;
+                        this.items = [...this.items]
+                    },
+                    plus() {
+                        this.items.push(["ITEM", 1000000])
+                    },
+                    minus(index) {
+                        this.items.splice(index, 1)
+                    },
+                    reset() {
+                        localStorage.clear();
+                        location.reload();
+                    },
+                    print() {
+                        window.print();
+                    },
+                    install() {
+                        pwaInstall.install();
+                    }
+                },
+                filters: {
+                    formatNumber(value) {
+                        return value?.toLocaleString("id-ID");
+                    },
+                },
+                computed: {
+                    total() {
+                        total = 0;
+
+                        this.items.forEach(function(i) {
+                            total += parseFloat(i[1].toString().replace(/\./g, "").replace(",", "."))
+                            trigger = i[0]
+                        });
+
+                        window.localStorage.setItem("items", JSON.stringify(this.items))
+
+                        return (total)
+                    }
+                }
+            });
+
+            function formatDateTime(value) {
+                value = new Date(value);
+                const options = { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "numeric", hour12: false };
+                const formattedDate = value?.toLocaleString("en-US", options);
+                const parts = formattedDate.split(", ");
+                const [monthDay, year, time] = parts;
+                const [month, day] = monthDay.split(" ");
+
+                return day + " " + month + " " + year[2] + year[3];
+            }
+        </script>
+    </body>
+    </html>
